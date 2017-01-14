@@ -1,10 +1,13 @@
 <?php
+// lien à la base
+
 error_reporting(E_ALL);
 //ini_set("display_errors",0);
 set_time_limit(-1);
 //if (php_sapi_name() == "cli") Tgb::doCli();
 
 class Tgb {
+  private static $tgb_sqlite = "data/tgb.sqlite";
   private static $pdo;
   private $reader; //analyseur XML (XMLReader)
 
@@ -21,17 +24,17 @@ class Tgb {
 
   /* nombre de livres par siècle de "création" */
   public function creation2json() {
-    self::connect('out/sqlite/tgb.sqlite');
+    self::connect(self::$tgb_sqlite);
     $sql="SELECT creation, count(bookid) FROM book GROUP BY creation";
     $query = self::$pdo->prepare($sql);
     $query->execute();
     $dates = $query->fetchAll();
     print_r($dates);
   }
-  
+
   /* nombre de livres par grandes catégories Dewey, en JSON */
   public function deweyCat2json() {
-    self::connect('out/sqlite/tgb.sqlite');
+    self::connect(self::$tgb_sqlite);
     $sql="SELECT parent, label, count(book) FROM about, dewey
       WHERE parent IS NOT NULL
       AND about.dewey = dewey.code
@@ -55,7 +58,7 @@ class Tgb {
    * code foutraque, tout revoir (preuve de concept OK)
    * */
   public function dewey2json() {
-    self::connect('out/sqlite/tgb.sqlite');
+    self::connect(self::$tgb_sqlite);
     //la liste des catégories avec leur label et compte si catégorie vide
     $sql="SELECT parent, label, count(book) FROM about, dewey WHERE about.parent = dewey.code GROUP BY parent;";
     /*
@@ -109,9 +112,9 @@ class Tgb {
     deweyCats = array_column($result, 'parent')); //à partir de PHP 5.5: http://stackoverflow.com/questions/7994497/how-to-get-an-array-of-specific-key-in-multidimensional-array-without-looping!
     */
   }
-  
+
   public function sqlTableSample() {
-    self::connect('out/sqlite/tgb.sqlite');
+    self::connect(self::$tgb_sqlite);
     //$sql="SELECT heading, title, issued, fpath, arkg FROM author, book, writes WHERE book.bookid = writes.book AND author.nna = writes.author AND fpath!='' ORDER BY heading LIMIT 50";
     $sql="SELECT heading, title, issued, fpath, arkg FROM author, book, writes WHERE book.bookid = writes.book AND author.nna = writes.author AND fpath!='' AND author.nna = '11898585' ORDER BY heading";
     $sql="SELECT heading, title, issued, fpath, arkg FROM author, book, writes WHERE title LIKE '%littérature%' AND book.bookid = writes.book AND author.nna = writes.author";
@@ -122,20 +125,18 @@ class Tgb {
     $table = '
       <table style="width:90%">
         <tr>
-          <th>Auteur</th>
           <th>Titre</th>
+          <th>Auteur</th>
           <th>Date</th>
-          <th>Source</th>
         </tr>';
     foreach($result as $rec) {
       $link = '<a href="'.$rec['fpath'].'" target="_blank">'.$rec['title'].'</a>';
-      $gallica = '<a href="http://gallica.bnf.fr/'.$rec['arkg'].'" target="_blank">gallica</a>';
+      $gallica = '<a href="http://gallica.bnf.fr/'.$rec['arkg'].'" target="_blank">'.$rec['title'].'</a>';
       $table .= '
         <tr>
-          <td>'.$rec['heading'].'</td>
-          <td>'.$link.'</td>
-          <td>'.$rec['issued'].'</td>
           <td>'.$gallica.'</td>
+          <td>'.$rec['heading'].'</td>
+          <td>'.$rec['issued'].'</td>
         </tr>
       ';
     }
