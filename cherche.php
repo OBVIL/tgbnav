@@ -75,8 +75,8 @@ if ( isset($_REQUEST['field']) ) $field = $_REQUEST['field'];
       <tr><th>N°</th><th>Dewey</th><th>Titre</th><th>Date</th><th>Éditeur</th><th>Fichier</th></tr>
     ';
     $q = preg_replace(
-      array( '@^([^%])@m' ),
-      array( "%"),
+      array( "@$@m", '@^([^%])@m' ),
+      array( "%", "%"),
       $q
     );
     $values = explode( "\n", trim($q) );
@@ -122,6 +122,7 @@ if ( isset($_REQUEST['field']) ) $field = $_REQUEST['field'];
       array( "%"),
       $q
     );
+    $values = explode( "\n", trim($q) );
     echo "\n".'<table class="sortable">
       <tr><th>N°</th><th>Auteur</th><th>Titre</th><th>Date</th><th>Éditeur</th><th>Fichier</th></tr>
     ';

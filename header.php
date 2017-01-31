@@ -10,6 +10,7 @@
       <a href="index.php">Accueil</a>
     | <a href="licence.php">Licence</a>
     | <a href="credits.php">Crédits</a>
+    | <a href="cherche.php">Recherche</a>
     <!---
     <li><a href="#done">Done</a></li>
     <li><a href="#todo">Todo</a></li>
