@@ -3,7 +3,7 @@
     <h1>
       <a href="./">TGB, OBVIL et BNF</a>
     </h1>
-    <a class="logo" href="http://obvil.paris-sorbonne.fr/bibliotheque/"><img class="logo" src="./../theme/img/logo-obvil.png" alt="OBVIL"></a>
+    <a class="logo" href="http://obvil.paris-sorbonne.fr/bibliotheque/"><img class="logo" src="http://obvil.paris-sorbonne.fr/corpus/theme/img/logo-obvil.png" alt="OBVIL"></a>
   </header>
   <div id="contenu">
     <nav class="menu" style="text-align: right; ">
