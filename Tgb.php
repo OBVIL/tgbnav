@@ -5,20 +5,23 @@ error_reporting(E_ALL);
 ini_set("display_errors", 1);
 set_time_limit(-1);
 //if (php_sapi_name() == "cli") Tgb::doCli();
-
+Tgb::connect();
 class Tgb {
   private static $tgb_sqlite = "data/tgb.sqlite";
-  private static $pdo;
+  public static $pdo;
   private $reader; //analyseur XML (XMLReader)
 
   function __construct($path="") {
     $this->reader = new XMLReader();
   }
 
-  private function connect($sqlFile) {
-    if (!file_exists($sqlFile)) exit($sqlFile." doesn’t exist!\n");
+  public static function connect() {
+    $file = self::$tgb_sqlite;
+    if (!file_exists( $file )) exit( $file." doesn’t exist!\n");
     else {
-      self::$pdo=new PDO("sqlite:".$sqlFile, "charset=UTF-8");
+      self::$pdo = new PDO("sqlite:".$file, "charset=UTF-8");
+      self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING ); // get error as classical PHP warn
+      self::$pdo->exec("PRAGMA temp_store = 2;"); // store temp table in memory (efficiency)
     }
   }
 
