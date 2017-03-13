@@ -5,10 +5,10 @@ $tgb = new Tgb();
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
     <title>TGB</title>
-    <link href="http://obvil.paris-sorbonne.fr/corpus/theme/obvil.css" rel="stylesheet">
-    <link href="tgb.css" rel="stylesheet">
+    <link href="http://obvil.paris-sorbonne.fr/corpus/theme/obvil.css" rel="stylesheet"/>
+    <link href="tgb.css" rel="stylesheet"/>
     <!-- D3 -->
     <script src="//d3js.org/d3.v3.min.js"></script>
   </head>
