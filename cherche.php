@@ -4,14 +4,13 @@ $q = "";
 if ( isset($_REQUEST['q']) ) $q = $_REQUEST['q'];
 $field = "";
 if ( isset($_REQUEST['field']) ) $field = $_REQUEST['field'];
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
     <title>TGB</title>
-    <link href="http://obvil.paris-sorbonne.fr/corpus/theme/obvil.css" rel="stylesheet">
-    <link href="tgb.css" rel="stylesheet">
+    <link href="http://obvil.paris-sorbonne.fr/corpus/theme/obvil.css" rel="stylesheet"/>
+    <link href="tgb.css" rel="stylesheet"/>
   </head>
   <body>
     <?php readfile( dirname(__FILE__)."/header.php" ) ?>
@@ -97,6 +96,7 @@ if ( isset($_REQUEST['field']) ) $field = $_REQUEST['field'];
       echo "</th>";
       echo "\n</tr>";
       if ( $i >= $limit ) continue;
+      /*
       $books->execute( array( $cat['code'] ) );
       while( $book = $books->fetch() ) {
         echo "\n<tr>";
@@ -113,6 +113,7 @@ if ( isset($_REQUEST['field']) ) $field = $_REQUEST['field'];
           break;
         }
       }
+      */
     }
     echo "\n".'</table>';
   }
