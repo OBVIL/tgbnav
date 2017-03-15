@@ -5,3 +5,7 @@ p { text-align: justify; }
 .bar { fill: steelblue; fill-opacity: .9; }
 .x.axis path { display: none; }
 .node { border: solid 1px white; font: 10px sans-serif; line-height: 12px; overflow: hidden; position: absolute; text-indent: 2px;}
+#contenu { padding: 0px 15px 0 15px; }
+div.dygraph { background-color: #FFFFFF;}
+div.graph { font-family: sans-serif; background-color: #FFFFFF; }
+.ann { color: #FFFFFF !important; text-shadow: 1px 1px 1px #000, -1px 1px 1px #000;  font-size: 16px !important; font-weight: bold; border: none !important; border-left: 3px solid #000 !important; background: rgba(128, 128, 128, 0.3) !important; line-height: 1em; padding: 0.2ex 0.2ex 0ex 0ex; }

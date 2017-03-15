@@ -1,5 +1,5 @@
 <?php
-$frtr = array(
+return array(
   json_decode('"\\u0300"') => "",
   json_decode('"\\u0301"') => "",
   json_decode('"\\u0302"') => "",
@@ -36,7 +36,6 @@ $frtr = array(
   json_decode('"\\u0341"') => "",
   json_decode('"\\u200E"') => "",
   json_decode('"\\u200F"') => "",
-  " " => "",
   "," => "",
   ";" => "",
   ":" => "",
@@ -66,7 +65,6 @@ $frtr = array(
   "¯" => "",
   "." => "",
   "‚" => "",
-  "*" => "",
   "(" => "",
   ")" => "",
   "[" => "",
