@@ -1,3 +1,2 @@
-      </div>
     </div>
-  <script src="Sortable.js"></script>
+  <script src="lib/Sortable.js"></script>

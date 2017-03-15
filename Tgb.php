@@ -4,19 +4,21 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 set_time_limit(-1);
-//if (php_sapi_name() == "cli") Tgb::doCli();
-Tgb::connect();
+Tgb::init();
 class Tgb {
-  private static $tgb_sqlite = "data/tgb.sqlite";
+  /** Table de caractères pour mise à l’ASCII, chargée depuis frtr.php */
+  static $frtr;
+  static $conf;
   public static $pdo;
-  private $reader; //analyseur XML (XMLReader)
 
-  function __construct($path="") {
-    $this->reader = new XMLReader();
+  public static function init()
+  {
+    self::$conf = include( dirname( __FILE__ )."/conf.php" );
+    self::connect( self::$conf['sqlite'] );
   }
 
-  public static function connect() {
-    $file = self::$tgb_sqlite;
+  public static function connect( $file ) {
+    self::$frtr = include( dirname( __FILE__ )."/lib/frtr.php" ); // crée une variable $frtr
     if (!file_exists( $file )) exit( $file." doesn’t exist!\n");
     else {
       self::$pdo = new PDO("sqlite:".$file, "charset=UTF-8");
@@ -25,15 +27,6 @@ class Tgb {
     }
   }
 
-  /* nombre de livres par siècle de "création" */
-  public function creation2json() {
-    self::connect(self::$tgb_sqlite);
-    $sql="SELECT creation, count(bookid) FROM book GROUP BY creation";
-    $query = self::$pdo->prepare($sql);
-    $query->execute();
-    $dates = $query->fetchAll();
-    print_r($dates);
-  }
 
   /* nombre de livres par grandes catégories Dewey, en JSON */
   public function deweyCat2json() {
@@ -116,36 +109,6 @@ class Tgb {
     */
   }
 
-  public function sqlTableSample() {
-    self::connect(self::$tgb_sqlite);
-    //$sql="SELECT heading, title, issued, fpath, arkg FROM author, book, writes WHERE book.bookid = writes.book AND author.nna = writes.author AND fpath!='' ORDER BY heading LIMIT 50";
-    $sql="SELECT heading, title, issued, fpath, arkg FROM author, book, writes WHERE book.bookid = writes.book AND author.nna = writes.author AND fpath!='' AND author.nna = '11898585' ORDER BY heading";
-    $sql="SELECT heading, title, issued, fpath, arkg FROM author, book, writes WHERE title LIKE '%littérature%' AND book.bookid = writes.book AND author.nna = writes.author";
-    $query = self::$pdo->prepare($sql);
-    $query->execute();
-    $result = $query->fetchAll();
-    //initialisation de la table
-    $table = '
-      <table style="width:90%">
-        <tr>
-          <th>Titre</th>
-          <th>Auteur</th>
-          <th>Date</th>
-        </tr>';
-    foreach($result as $rec) {
-      $link = '<a href="'.$rec['fpath'].'" target="_blank">'.$rec['title'].'</a>';
-      $gallica = '<a href="http://gallica.bnf.fr/'.$rec['arkg'].'" target="_blank">'.$rec['title'].'</a>';
-      $table .= '
-        <tr>
-          <td>'.$gallica.'</td>
-          <td>'.$rec['heading'].'</td>
-          <td>'.$rec['issued'].'</td>
-        </tr>
-      ';
-    }
-    $table .= '</table>';
-    print $table;
-  }
 
 }
 ?>
