@@ -50,7 +50,7 @@ if ( !isset($limit) || $limit < 1 || $limit > 500 ) $limit = 50;
       </tr>
       <?php
 if ( $pre ) {
-  $pre = strtr( $pre, Tgb::$frtr );
+  $pre = strtr( str_replace( $pre, ' ', ''), Tgb::$frtr );
   $qpers = Tgb::$pdo->prepare("SELECT * FROM person WHERE sort >= ? AND sort <= ? ORDER BY pages DESC LIMIT ?"); //
   $qpers->execute( array( $pre, $pre.'~', $limit) );
 }
@@ -90,7 +90,7 @@ while( $pers = $qpers->fetch( PDO::FETCH_ASSOC ) ) {
   if ($pers['given']) $label .= ', '.$pers['given'];
   echo '  <tr>';
   echo '    <td align="right">'.$i.'</td>';
-  echo '    <td><a href="cherche.php?person='.strtr( $pers['family'], Tgb::$frtr ).'">'.$label.'</a></td>';
+  echo '    <td><a href="cherche.php?persark='.$pers['ark'].'">'.$label.'</a></td>';
   echo '    <td>'.$pers['birthyear'].'</td>';
   echo '    <td>'.$pers['deathyear'].'</td>';
   echo '    <td align="right">'.$pers['pages'].'</td>';
