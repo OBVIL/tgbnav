@@ -17,7 +17,8 @@ class Tgb {
     self::connect( self::$conf['sqlite'] );
   }
 
-  public static function connect( $file ) {
+  public static function connect( $file )
+  {
     self::$frtr = include( dirname( __FILE__ )."/lib/frtr.php" ); // crée une variable $frtr
     if (!file_exists( $file )) exit( $file." doesn’t exist!\n");
     else {
@@ -29,7 +30,8 @@ class Tgb {
 
 
   /* nombre de livres par grandes catégories Dewey, en JSON */
-  public function deweyCat2json() {
+  public function deweyCat2json()
+  {
     self::connect(self::$tgb_sqlite);
     $sql="SELECT parent, label, count(book) FROM about, dewey
       WHERE parent IS NOT NULL
@@ -53,7 +55,8 @@ class Tgb {
    * sortir les valeurs pour tout dewey, classées par catégorie
    * code foutraque, tout revoir (preuve de concept OK)
    * */
-  public function dewey2json() {
+  public function dewey2json()
+  {
     self::connect(self::$tgb_sqlite);
     //la liste des catégories avec leur label et compte si catégorie vide
     $sql="SELECT parent, label, count(book) FROM about, dewey WHERE about.parent = dewey.code GROUP BY parent;";

@@ -1,9 +1,10 @@
 <?php
 include (dirname(__FILE__).'/Tgb.php');
 $person = str_replace('"', '&quot;', @$_REQUEST['person']);
+$persark = str_replace('"', '&quot;', @$_REQUEST['persark']);
 $birthfrom = @$_REQUEST['birthfrom'];
 $birthto = @$_REQUEST['birthto'];
-if (!$birthto) $birthto = $birthfrom;
+if ( $birthto === null ) $birthto = $birthfrom;
 ?><!DOCTYPE html>
 <html lang="fr">
   <head>
